@@ -28,10 +28,10 @@ vet: lint
 modules:
 	go mod tidy
 
-$(APP_TARGETS): vet
+$(APP_TARGETS): vet modules
 
-build: modules $(APP_TARGETS)
-	go build -o $(OUTPUT_DIR)/$^/ -v $(addprefix $(APPS_DIR)/,$^)
+build: $(APP_TARGETS)
+	go build -v -o $(OUTPUT_DIR)/$^/ $(addprefix $(APPS_DIR)/,$^)
 
 run: vet
 	go run $(APPS_DIR)/$(TARGET)
