@@ -6,15 +6,13 @@ ENV GOOS=${TARGETOS}
 ENV GOARCH=${TARGETARCH}
 
 WORKDIR /app
-COPY src .
-RUN make vet
+COPY . .
 
 FROM base as run
 ENTRYPOINT ["/bin/bash", "-c"]
-CMD make run
 
 FROM base as build
-RUN make build
+RUN make
 
 FROM scratch as bin
 COPY --from=build /app/out ./
